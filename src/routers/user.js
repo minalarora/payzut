@@ -7,7 +7,7 @@ const sharp=require("sharp")
 
 const upload=multer({
      limits: {
-         fileSize: 5000000
+         fileSize: 2000000
      },
      fileFilter(req,file,cb)
      {
@@ -19,11 +19,11 @@ const upload=multer({
      }
  })
 
- router.post("/user/me/image",auth, upload.single('image'),async (req,res)=>{
+ router.post("/user/me/aadhaarfront",auth, upload.single('aadhaarfront'),async (req,res)=>{
      try
      {
-     const buffer=await sharp(req.file.buffer).resize({width:250, height:250}).png().toBuffer()
-     req.user.image=buffer
+     const buffer=await sharp(req.file.buffer).png().toBuffer()
+     req.user.aadhaarfront=buffer
      await req.user.save()
      res.status(200).send("Uploaded!")
      }
@@ -35,24 +35,59 @@ const upload=multer({
      res.status(400).send({error:error.message})
  })
 
- router.delete("/user/me/image",auth,async (req,res)=>{
+ router.post("/user/me/aadhaarback",auth, upload.single('aadhaarback'),async (req,res)=>{
     try
     {
-        req.user.image=undefined
-        await req.user.save()
-        res.status(200).send()
+    const buffer=await sharp(req.file.buffer).png().toBuffer()
+    req.user.aadhaarback=buffer
+    await req.user.save()
+    res.status(200).send("Uploaded!")
     }
     catch(e)
     {
-        res.status(500).send(e)
+       res.status(500).send(e)
     }
+},(error,req,res,next)=>{
+    res.status(400).send({error:error.message})
 })
 
-router.get("/user/me/image",auth,async (req,res)=>
+router.post("/user/me/pancard",auth, upload.single('pancard'),async (req,res)=>{
+    try
+    {
+    const buffer=await sharp(req.file.buffer).png().toBuffer()
+    req.user.pancard=buffer
+    await req.user.save()
+    res.status(200).send("Uploaded!")
+    }
+    catch(e)
+    {
+       res.status(500).send(e)
+    }
+},(error,req,res,next)=>{
+    res.status(400).send({error:error.message})
+})
+
+router.post("/user/me/selfie",auth, upload.single('selfie'),async (req,res)=>{
+    try
+    {
+    const buffer=await sharp(req.file.buffer).png().toBuffer()
+    req.user.selfie=buffer
+    await req.user.save()
+    res.status(200).send("Uploaded!")
+    }
+    catch(e)
+    {
+       res.status(500).send(e)
+    }
+},(error,req,res,next)=>{
+    res.status(400).send({error:error.message})
+})
+
+router.get("/user/me/selfie",auth,async (req,res)=>
 {
     try
     {
-        if(!req.user.image)
+        if(!req.user.selfie)
         {
             return res.status(404).send("No Image")
         }

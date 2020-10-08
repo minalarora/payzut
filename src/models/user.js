@@ -12,14 +12,6 @@ const userSchema=mongoose.Schema({
       trim: true,
       maxlength: 30
   },
-  gender:
-  {
-    type:String,
-    required: true,
-    lowercase: true,
-    trim: true,
-    enum :['male','female']
-  },
   address:
   {
     type:String,
@@ -30,13 +22,18 @@ const userSchema=mongoose.Schema({
   {
       type: String,
       maxlength:20,
-      trim: true
+      trim: true,
   },
   state:
   {
     type: String,
     maxlength:20,
     trim: true 
+  },
+  pincode:
+  {
+    type: Number,
+    minlength: 6
   },
   email:
   {
@@ -73,28 +70,25 @@ const userSchema=mongoose.Schema({
         }
     }
   },
-  aadhar:
-  {
-    type: String,
-    required: true,
-    unique: true,
-    minlength:14,
-  
-  },
-  pan:
-  {
-    type: String,
-    required: true,
-    unique: true,
-  
-  },
   accountstatus:
   {
       type: Boolean,
       required: true,
-      default: true 
+      default: false 
   },
-  image:
+  aadhaarfront:
+  {
+    type: Buffer
+  },
+  aadhaarback:
+  {
+    type: Buffer
+  },
+  pancard:
+  {
+    type: Buffer
+  },
+  selfie:
   {
     type: Buffer
   },
