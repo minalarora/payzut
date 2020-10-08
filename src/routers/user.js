@@ -173,7 +173,7 @@ router.patch("/user/me",auth,async(req,res)=>{
     try
     {
         const updates=Object.keys(req.body)
-        const allowedUpdates=['accountstatus','mobile','email','password','address','city','state','gender']
+        const allowedUpdates=['password','address','city','state','pincode']
         const isValid=updates.every((update)=>{
             return allowedUpdates.includes(update)
         }) 
