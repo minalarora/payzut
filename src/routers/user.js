@@ -182,13 +182,15 @@ router.patch("/user/me",auth,async(req,res)=>{
             return res.status(404).send("Invalid!")
         }
 
+        const user={}
         updates.forEach((update)=>{
             req.user[update]=req.body[update]
+            user[update]=  req.body[update]   
         })
 
         await req.user.save()
 
-        res.send(req.user).status(200)
+        res.send(user).status(200)
     }
     catch(error)
     {
