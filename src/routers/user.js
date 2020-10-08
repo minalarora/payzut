@@ -92,7 +92,7 @@ router.get("/user/me/selfie",auth,async (req,res)=>
             return res.status(404).send("No Image")
         }
         res.set('Content-Type','image/png')
-        res.send(req.user.image).status(200)
+        res.send(req.user.selfie).status(200)
     }
     catch(e)
     {
