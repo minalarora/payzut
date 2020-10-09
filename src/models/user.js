@@ -10,30 +10,30 @@ const userSchema=mongoose.Schema({
       required: true,
       lowercase: true,
       trim: true,
-      maxlength: 30
+      maxlength: [30,"INVALID USER NAME"]
   },
   address:
   {
     type:String,
-    maxlength:50,
+    maxlength:[50,"INVALID ADDRESS"],
     trim:true
   },
   city:
   {
       type: String,
-      maxlength:20,
+      maxlength:[20,"INVALID CITY"],
       trim: true,
   },
   state:
   {
     type: String,
-    maxlength:20,
+    maxlength:[20,"INVALID STATE"],
     trim: true 
   },
   pincode:
   {
     type: Number,
-    minlength: 6
+    minlength: [6,"INVALID PINCODE"]
   },
   email:
   {
@@ -46,7 +46,7 @@ const userSchema=mongoose.Schema({
     {
         if(!validator.isEmail(value))
         {
-            throw new Error("Invalid email")
+            throw new Error("INVALID EMAIL")
         }
     }
   },
@@ -61,12 +61,12 @@ const userSchema=mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    minlength: 10,
+    minlength: [10,'INVALID MOBILE'],
     validate(value)
     {
         if(!validator.isMobilePhone(value))
         {
-            throw new Error("Invalid Mobile") 
+            throw new Error("INVALID MOBILE") 
         }
     }
   },
@@ -137,6 +137,7 @@ userSchema.pre('save',async function(next){
   }
   next()
 })
+
 
 userSchema.pre('remove',async function(next){
   const user=this

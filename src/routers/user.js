@@ -111,7 +111,23 @@ router.post('/user',async (req,res)=>{
     }
     catch(e)
     {
-        res.status(500).send(e.message)
+        if(e.message.split(":")[2].trim().charAt(0)== 'I')
+        {
+            res.status(500).send({error: e.message.split(":")[2].trim()})
+        }
+        else if(e.message.split(":")[2].trim().charAt(0)== 'm')
+        {
+            res.status(500).send({error: 'Mobile Number Already Registered!'})
+        }
+        else if(e.message.split(":")[2].trim().charAt(0)== 'e')
+        {
+            res.status(500).send({error: 'E-MAIL Already Registered!'})
+        }
+        else
+        {
+            res.status(500).send({error: 'Server Error'})   
+        }
+       
     }
 })
 
@@ -125,7 +141,7 @@ router.post('/user/login',async (req,res)=>
     }
     catch(error)
     {
-        res.status(400).send(error)
+        res.status(404).send(error)
     }
 })
 
